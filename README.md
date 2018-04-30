@@ -1,5 +1,8 @@
 # mjsonlib
-Small JSON library based on M*LIB
+Small JSON library based on M*LIB.
+
+This library allows parsing a JSON file, reading values from it
+and output it.
 
 ## USAGE
 
