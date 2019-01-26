@@ -46,3 +46,7 @@ afl: test-afl.exe
 	$(CP) test.json afl-in
 	afl-fuzz -i afl-in -o afl-out -M fuzzer01 -- ./test-afl.exe
 
+afl-slave:
+	test -d ./afl-out/fuzzer01 || exit 1
+	for i in $$(seq 2 $$(LANG=C lscpu |grep "CPU(s)"|head -1|awk ' { print $$2 }')) ; do xterm -e  afl-fuzz -i afl-in -o afl-out -M fuzzer0$${i} -- ./test-afl.exe & done
+x
