@@ -168,7 +168,7 @@ bool json_in_str(mjson_t *p, FILE *f)
     variant_json_init_boolean((*p)->json);
     b = boolean_in_str(variant_json_get_boolean((*p)->json), f);
     if (!b) return false;
-  } else if (c >= '0' && c <= '9') {
+  } else if ((c >= '0' && c <= '9') || (c == '-')){
     variant_json_init_real((*p)->json);
     b = real_in_str(variant_json_get_real((*p)->json), f);
     if (!b) return false;
@@ -183,7 +183,7 @@ bool json_in_str(mjson_t *p, FILE *f)
   } else if (c == '{') {
     variant_json_init_dict((*p)->json);
     b = dict_json_in_str(*variant_json_get_dict((*p)->json), f);
-    if (!b) return false;    
+    if (!b) return false;
   } else if (c == 'n') {
     variant_json_init((*p)->json);
     c = fgetc(f);
