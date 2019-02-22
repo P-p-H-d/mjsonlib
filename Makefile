@@ -24,7 +24,7 @@ mlib:
 	$(GIT_CLONE) $(MLIB_URL)
 
 clean:
-	$(RM) *~ *.o *.a test.exe
+	$(RM) *~ *.o *.a test.exe test-afl.exe
 	$(RMDIR) mlib
 	$(RMDIR) afl-out
 	$(RMDIR) afl-in
