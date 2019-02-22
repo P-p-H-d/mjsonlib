@@ -37,12 +37,16 @@ test:	check
 test.exe: test.c mjsonlib.a
 	$(CC) $(CFLAGS) test.c mjsonlib.a -o test.exe
 
-test-afl.exe: test-afl.c mjsonlib.c
+test-afl.exe: test-afl.c mjsonlib.c mlib
 	afl-gcc -std=c99 -O2 -g $(CPPFLAGS) test-afl.c mjsonlib.c -o test-afl.exe
 
 afl: test-afl.exe
 	$(MKDIR) afl-out
 	$(MKDIR) afl-in
 	$(CP) test.json afl-in
-	afl-fuzz -i afl-in -o afl-out -- ./test-afl.exe
+	afl-fuzz -i afl-in -o afl-out -M fuzzer01 -- ./test-afl.exe
 
+afl-slave:
+	test -d ./afl-out/fuzzer01 || exit 1
+	for i in $$(seq 2 $$(LANG=C lscpu |grep "CPU(s)"|head -1|awk ' { print $$2 }')) ; do xterm -e  afl-fuzz -i afl-in -o afl-out -M fuzzer0$${i} -- ./test-afl.exe & done
+x

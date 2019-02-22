@@ -11,5 +11,15 @@ int main(void)
   bool b = json_init_in_str(&p, stdin);
   if (!b) exit(1);
   json_clear(p);
+
+  printf("JSON= ");
+  json_out_str(stdout, p);
+  printf("\n");
+
+  double d = json_get_real(p, "c", "[2]", "d", NULL);
+  d = json_get_real(p, "b", NULL);
+  int i = json_get_boolean (p, "c", "[0]", NULL);
+  const char *str = json_get_string(p, "c", "[3]", NULL);
+  
   exit(0);
 }
