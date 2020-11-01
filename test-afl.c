@@ -10,7 +10,6 @@ int main(void)
   mjson_t p;
   bool b = json_init_in_str(&p, stdin);
   if (!b) exit(1);
-  json_clear(p);
 
   printf("JSON= ");
   json_out_str(stdout, p);
@@ -21,5 +20,6 @@ int main(void)
   int i = json_get_boolean (p, "c", "[0]", NULL);
   const char *str = json_get_string(p, "c", "[3]", NULL);
   
+  json_clear(p);
   exit(0);
 }
